@@ -1,0 +1,34 @@
+modLoader="javafml" #mandatory
+loaderVersion="${forge_range}" #mandatory
+license="MIT"
+issueTrackerURL="https://github.com/ChiefArug/Thermalthermaloot/issues" #optional
+[[mods]] #mandatory
+modId="thermaloot" #mandatory
+version="${thermaloot_version}" #mandatory
+displayName="Thermaloot" #mandatory
+# A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
+#updateJSONURL="https://change.me.example.invalid/updates.json" #optional
+displayURL="https://www.curseforge.com/minecraft/mc-mods/thermaloot" #optional
+logoFile="pack.png" #optional
+credits="Thanks to all the people I have " #optional
+authors="ChiefArug" #optional
+description='''
+Addon for the Thermal Series that adds Steam dynamos back to modern versions!
+'''
+[[dependencies.thermaloot]] #optional
+    modId="forge" #mandatory
+    mandatory=true #mandatory
+    versionRange="${forge_range}" #mandatory
+[[dependencies.thermaloot]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="${minecraft_range}"
+[[dependencies.thermaloot]] #optional
+    modId="thermal" #mandatory
+    mandatory=true #mandatory
+    versionRange="${thermal_core_range}" #mandatory
+    ordering="AFTER"
+[[dependencies.thermaloot]]
+    modId="thermal_expansion"
+    mandatory=true
+    versionRange="[10,)"

@@ -1,0 +1,186 @@
+{
+  "type": "minecraft:generic",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "thermaloot:variable_capacitor"
+        }
+      ]
+    }
+  ],
+  "functions": [
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {"BaseMod": {
+        "min": 0,
+        "max": 3
+      }},
+      "conditions": [{"condition": "random_chance", "chance": 0.2}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {"RFMax": {
+        "min": 0.1,
+        "max": {
+          "min": 1,
+          "max": {
+            "type": "binomial",
+            "n": 4,
+            "p": 0.9
+          }
+        }
+      }},
+      "RFXfer": {
+        "min": 0,
+        "max": {
+          "min": 3,
+          "max": {
+            "type": "binomial",
+            "n": 6,
+            "p": 0.5
+          }
+        }
+      },
+      "conditions": [{"condition": "random_chance", "chance": 0.3}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {"FluidMax": {
+        "min": 0.1,
+        "max": 2
+      }},
+      "conditions": [{"condition": "random_chance", "chance": 0.25}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {"Radius": {
+        "min": -2,
+        "max": 3.01
+      }},
+      "conditions": [{"condition": "random_chance", "chance": 0.1}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {
+        "CycProc": 1
+      },
+      "conditions": [{"condition": "random_chance", "chance": 0.05}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {
+        "SecNull": 1
+      },
+      "conditions": [{"condition": "random_chance", "chance": 0.05}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {
+        "XpStr": 1
+      },
+      "conditions": [{"condition": "random_chance", "chance": 0.05}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {"PotionAmp": {
+        "min": -2,
+        "max": 2
+      },
+      "PotionDur":  {
+        "min": -2,
+        "max": {
+          "type": "binomial",
+          "n": 3,
+          "p": 0.7
+        }
+      }},
+      "conditions": [{"condition": "random_chance", "chance": 0.1}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {"DynamoEnergy": {
+        "min": 0.1,
+        "max": 2
+      },
+      "DynamoPower": {
+        "min": 0.1,
+        "max": 2
+      }},
+      "conditions": [{"condition": "random_chance", "chance": 0.2}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {
+        "DynamoThrottle": 1
+      },
+      "conditions": [{"condition": "random_chance", "chance": 0.05}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {"MachineMin": {
+        "min": 0.01,
+        "max": 0.6
+      }},
+      "conditions": [{"condition": "random_chance", "chance": 0.03}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {"MachinePri": {
+        "min": -0.8,
+        "max": 0.8
+      }},
+      "conditions": [{"condition": "random_chance", "chance": 0.1}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {"MachineSec": {
+        "min": -1.5,
+        "max": 2
+      }},
+      "conditions": [{"condition": "random_chance", "chance": 0.1}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {"MachineCat": {
+        "min": 0.1,
+        "max": 1.5
+      }},
+      "conditions": [{"condition": "random_chance", "chance": 0.1}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {"MachineEnergy": {
+        "min": 0.4,
+        "max": {
+          "min": 1,
+          "max": {
+            "type": "binomial",
+            "n": 2,
+            "p": 0.5
+          }
+        }
+      }},
+      "conditions": [{"condition": "random_chance", "chance": 0.4}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {"MachinePower": {
+        "type": "binomial",
+        "n": 3,
+        "p": 0.6
+      }},
+      "conditions": [{"condition": "random_chance", "chance": 0.4}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {"MachineSpeed": {
+        "min": -0.5,
+        "max": 1
+      }},
+      "conditions": [{"condition": "random_chance", "chance": 0.3}]
+    },
+    { "function": "thermaloot:apply_augment_data",
+      "augments": {"MachineXp": {
+        "min": 0.01,
+        "max": {
+          "min": 0.5,
+          "max": {
+            "type": "binomial",
+            "n": 5,
+            "p": 0.5
+          }
+        }
+      }},
+      "conditions": [{"condition": "random_chance", "chance": 0.1}]
+    },
+    {
+      "function": "thermaloot:name"
+    }
+  ]
+}
