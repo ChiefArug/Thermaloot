@@ -140,12 +140,12 @@ public class ApplyAugmentDataFunction extends LootItemConditionalFunction {
 
 	static class LuckData {
 		float luck = 0;
-		float maxLuck = -1.01f;
-		float minLuck = 1;
+		float maxLuck = Float.NEGATIVE_INFINITY;
+		float minLuck = Float.POSITIVE_INFINITY;
 		int possibleLuck = 0;
 
 		float getFinalLuck() {
-			if (maxLuck < 1) return NORMAL;
+			if (maxLuck == Float.NEGATIVE_INFINITY) return NORMAL;
 			return luck / possibleLuck;
 		}
 
