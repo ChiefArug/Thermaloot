@@ -24,8 +24,8 @@ public class AddACapacitorModifier extends LootModifier {
 
     public static final Codec<AddACapacitorModifier> CODEC = RecordCodecBuilder.create(
             instance -> LootModifier.codecStart(instance).and(
-                    ICodecifiedNumberProvidersForYouMojangHopeYoureHappy.NUMBER_PROVIDER.optionalFieldOf("count", SINGLE_COUNT).forGetter(AddACapacitorModifier::getCountProvider)
-            ).apply(instance, (a, b) -> new AddACapacitorModifier(a, b))
+                    ICodecifiedNumberProvidersForYouMojangHopeYoureHappy.NUMBER_PROVIDER.optionalFieldOf("count", SINGLE_COUNT).forGetter(AddACapacitorModifier::getCountProvider) //TODO: use NullableFieldCodec from https://github.com/Commoble/databuddy/blob/b52374e6b8177ab1a360b74c3b31c7b268741473/src/main/java/commoble/databuddy/codec/NullableFieldCodec.java#L46 here so that it doesn't just SILENTLY fail
+            ).apply(instance, AddACapacitorModifier::new)
     );
 
     private final NumberProvider countProvider;
