@@ -1,13 +1,16 @@
 package chiefarug.mods.thermaloot;
 
-import chiefarug.mods.thermaloot.loot.ApplyAugmentDataFunction;
+import chiefarug.mods.thermaloot.loot.AddACapacitorModifier;
+import chiefarug.mods.thermaloot.loot.AddAugmentDataFunction;
 import chiefarug.mods.thermaloot.loot.NameFunction;
 import cofh.thermal.lib.common.ThermalItemGroups;
 import com.mojang.logging.LogUtils;
+import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -33,12 +36,16 @@ public class Thermaloot {
     public static final DeferredRegister<Item> ITEM_REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final RegistryObject<Item> VARIABLE_CAPACITOR = ITEM_REGISTRY.register("variable_capacitor", () -> new Item(new Item.Properties().tab(ThermalItemGroups.THERMAL_ITEMS)));
 
+    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIER_SERIALIZER_REGISTRY = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, MODID);
+    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> ADD_A_CAPACITOR_CODEC = LOOT_MODIFIER_SERIALIZER_REGISTRY.register("add_a_capacitor", () -> AddACapacitorModifier.CODEC);
+
     public Thermaloot() {
         var modBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ThermalootConfig.spec, "thermaloot-server.toml");
 
         LOOT_FUNCTION_REGISTRY.register(modBus);
         ITEM_REGISTRY.register(modBus);
+        LOOT_MODIFIER_SERIALIZER_REGISTRY.register(modBus);
         //todo add stuff to loot tables by default by loot modifier
         //todo add tooltip event for displaying 'toggle' augments like aux null or xp storage. they don't currently
         //todo figure out what to do with capacitors that don't generate with stats.

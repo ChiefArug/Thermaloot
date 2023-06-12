@@ -13,24 +13,15 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.providers.number.BinomialDistributionGenerator;
-import net.minecraft.world.level.storage.loot.providers.number.LootNumberProviderType;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProviders;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import static chiefarug.mods.thermaloot.Thermaloot.LGGR;
-import static chiefarug.mods.thermaloot.Thermaloot.Tags.LUCK;
 import static chiefarug.mods.thermaloot.Thermaloot.Tags.LUCK_DATA;
-import static chiefarug.mods.thermaloot.Thermaloot.Tags.MAX_LUCK;
-import static chiefarug.mods.thermaloot.Thermaloot.Tags.MIN_LUCK;
-import static chiefarug.mods.thermaloot.Thermaloot.Tags.POSSIBLE_LUCK;
 import static chiefarug.mods.thermaloot.Thermaloot.mergeTags;
 import static cofh.lib.util.constants.NBTTags.TAG_AUGMENT_DATA;
 
