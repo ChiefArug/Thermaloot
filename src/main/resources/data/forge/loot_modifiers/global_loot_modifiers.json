@@ -1,6 +1,16 @@
 {
   "replace": false,
   "entries": [
-    "thermaloot:end_city"
+    "thermaloot:ancient_city",
+    "thermaloot:buried_treasure",
+    "thermaloot:desert_temple",
+    "thermaloot:dungeon",
+    "thermaloot:end_city",
+    "thermaloot:jungle_temple",
+    "thermaloot:mineshaft",
+    "thermaloot:ruined_portal",
+    "thermaloot:shipwreck_treasure",
+    "thermaloot:stronghold_corridor",
+    "thermaloot:woodland_mansion"
   ]
 }

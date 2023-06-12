@@ -89,7 +89,7 @@ public class NameFunction extends LootItemConditionalFunction {
 		bad(0.25f, 0.5f, true),
 		good(0.5f, 0.75f, true),
 		amazing(0.75f, 1.0f, true),
-		normal(-1, -1) {
+		normal(-1, -1) { // only used when it generates with only set stat modifiers, ie dynamo throttle, auxiliary cactus
 			static final Random r = new Random();
 
 			@Override

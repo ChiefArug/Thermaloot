@@ -63,5 +63,12 @@
   "attribute.thermaloot.bugged": "Bugged %s (no, seriously. please tell Arug)",
 
 
-  "item.thermaloot.variable_capacitor": "Capacitor"
+  "item.thermaloot.variable_capacitor": "Capacitor",
+
+
+  "info.thermal.augment.attr.MachineMin": "Minimum Output Chance",
+  "info.thermal.augment.attr.SecNull": "Auxiliary Nullifier",
+  "info.thermal.augment.attr.XpStr": "XP Storage",
+  "info.thermal.augment.attr.DynamoThrottle": "Dynamo Auto-throttle",
+  "info.thermal.augment.attr.CycProc": "Cyclical Processor"
 }
