@@ -1,5 +1,6 @@
 package chiefarug.mods.thermaloot;
 
+import com.google.common.base.Suppliers;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -19,43 +20,59 @@ import net.minecraft.world.level.storage.loot.providers.score.ScoreboardNameProv
 import net.minecraft.world.level.storage.loot.providers.score.ScoreboardNameProviders;
 
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 @SuppressWarnings("SpellCheckingInspection")
 // Do I only use this class once? Yes. Was it worth it? Maybe...
 public class ICodecifiedNumberProvidersForYouMojangHopeYoureHappy {
 
+	public static void loadEarlyPls() {}
+
 	public static final Codec<NumberProvider> NUMBER_PROVIDER = Codec.either(
             Codec.FLOAT.xmap(ConstantValue::exactly, (ConstantValue cv) -> cv.value),
             NumberProviderTypeCodecs.MAIN
     // get the right, else get the left (it should never throw). Always serialize to the right, as that is just NumberProvider
-    ).xmap(either -> either.right().orElse(either.orThrow()), Either::right);
+    ).xmap(ICodecifiedNumberProvidersForYouMojangHopeYoureHappy::unwrapDoubleSidedEither, Either::right);
 
 	public static class NumberProviderTypeCodecs {
 		public static final Codec<LootNumberProviderType> TYPE = Registry.LOOT_NUMBER_PROVIDER_TYPE.byNameCodec();
 
-		public static final Codec<ConstantValue> CONSTANT = RecordCodecBuilder.create(instance -> instance.group(
+		// These are all suppliers because some of them reference the main NP codec, which is still being initialized when these are being initialized, so results in a NPE
+		public static final Supplier<Codec<ConstantValue>> CONSTANT = Suppliers.memoize(() -> RecordCodecBuilder.create(instance -> instance.group(
 				Codec.FLOAT.fieldOf("value").forGetter((ConstantValue cv) -> cv.getFloat(null))
-		).apply(instance, ConstantValue::exactly));
-		public static final Codec<BinomialDistributionGenerator> BINOMIAL = RecordCodecBuilder.create(instance -> instance.group(
+		).apply(instance, ConstantValue::exactly)));
+		public static final Supplier<Codec<BinomialDistributionGenerator>> BINOMIAL = Suppliers.memoize(() -> RecordCodecBuilder.create(instance -> instance.group(
 				NUMBER_PROVIDER.fieldOf("n").forGetter((BinomialDistributionGenerator bdg) -> bdg.n),
 				NUMBER_PROVIDER.fieldOf("p").forGetter((BinomialDistributionGenerator bdg) -> bdg.p)
-		).apply(instance, BinomialDistributionGenerator::new));
-		public static final Codec<UniformGenerator> UNIFORM = RecordCodecBuilder.create(instance -> instance.group(
+		).apply(instance, BinomialDistributionGenerator::new)));
+		public static final Supplier<Codec<UniformGenerator>> UNIFORM = Suppliers.memoize(() -> RecordCodecBuilder.create(instance -> instance.group(
 				NUMBER_PROVIDER.fieldOf("min").forGetter((UniformGenerator ug) -> ug.min),
 				NUMBER_PROVIDER.fieldOf("max").forGetter((UniformGenerator ug) -> ug.max)
-		).apply(instance, UniformGenerator::new));
-		public static final Codec<ScoreboardValue> SCORE = RecordCodecBuilder.create(instance -> instance.group(
+		).apply(instance, UniformGenerator::new)));
+		public static final Supplier<Codec<ScoreboardValue>> SCORE = Suppliers.memoize(() -> RecordCodecBuilder.create(instance -> instance.group(
 				NameProviderCodecs.MAIN.fieldOf("target").forGetter(sv -> sv.target),
 				Codec.STRING.fieldOf("score").forGetter((ScoreboardValue sv) -> sv.score),
 				Codec.FLOAT.optionalFieldOf("scale", 1f).forGetter((ScoreboardValue sv) -> sv.scale)
-		).apply(instance, ScoreboardValue::new));
-		public static final Map<LootNumberProviderType, Codec<? extends NumberProvider>> ALL = Map.of(
+		).apply(instance, ScoreboardValue::new)));
+		public static final Map<LootNumberProviderType, Supplier<? extends Codec<? extends NumberProvider>>> ALL = Map.of(
 				NumberProviders.CONSTANT, CONSTANT,
 				NumberProviders.BINOMIAL, BINOMIAL,
 				NumberProviders.UNIFORM, UNIFORM,
 				NumberProviders.SCORE, SCORE
 				);
-		public static final Codec<NumberProvider> MAIN = TYPE.dispatch(NumberProvider::getType, NumberProviderTypeCodecs.ALL::get);
+		private static final Codec<NumberProvider> actualMainOne = TYPE.dispatch(NumberProvider::getType, type -> NumberProviderTypeCodecs.ALL.get(type).get());
+		public static final Codec<NumberProvider> MAIN = actualMainOne;/*Codec.either(
+				actualMainOne,
+				UNIFORM.get()
+		).xmap(ICodecifiedNumberProvidersForYouMojangHopeYoureHappy::unwrapDoubleSidedEither, Either::left);*/
+
+
+	}
+	private static <T> T unwrapDoubleSidedEither(Either<? extends T, ? extends T> e) {
+		Optional<? extends T> l = e.left();
+		if (l.isPresent()) return l.get();
+		return e.right().orElseThrow();
 	}
 
 	public static class NameProviderCodecs {

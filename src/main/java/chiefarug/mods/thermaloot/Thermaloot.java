@@ -40,6 +40,8 @@ public class Thermaloot {
     public static final RegistryObject<Codec<? extends IGlobalLootModifier>> ADD_A_CAPACITOR_CODEC = LOOT_MODIFIER_SERIALIZER_REGISTRY.register("add_a_capacitor", () -> AddACapacitorModifier.CODEC);
 
     public Thermaloot() {
+        ICodecifiedNumberProvidersForYouMojangHopeYoureHappy.loadEarlyPls();
+
         var modBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ThermalootConfig.spec, "thermaloot-server.toml");
 

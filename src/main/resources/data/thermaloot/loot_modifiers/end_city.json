@@ -1,9 +1,12 @@
 {
   "type": "thermaloot:add_a_capacitor",
-  "conditions": [
-    {
+  "count": {
+    "type": "uniform",
+    "min": 1,
+    "max": 4
+  },
+  "conditions": [{
       "condition": "forge:loot_table_id",
       "loot_table_id": "minecraft:chests/end_city_treasure"
-    }
-  ]
+  }]
 }
