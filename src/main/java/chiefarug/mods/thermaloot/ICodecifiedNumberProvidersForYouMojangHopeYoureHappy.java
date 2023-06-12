@@ -31,7 +31,7 @@ public class ICodecifiedNumberProvidersForYouMojangHopeYoureHappy {
     ).xmap(either -> either.right().orElse(either.orThrow()), Either::right);
 
 	public static class NumberProviderTypeCodecs {
-		private static final Codec<LootNumberProviderType> TYPE = Registry.LOOT_NUMBER_PROVIDER_TYPE.byNameCodec();
+		public static final Codec<LootNumberProviderType> TYPE = Registry.LOOT_NUMBER_PROVIDER_TYPE.byNameCodec();
 
 		public static final Codec<ConstantValue> CONSTANT = RecordCodecBuilder.create(instance -> instance.group(
 				Codec.FLOAT.fieldOf("value").forGetter((ConstantValue cv) -> cv.getFloat(null))
@@ -55,10 +55,10 @@ public class ICodecifiedNumberProvidersForYouMojangHopeYoureHappy {
 				NumberProviders.UNIFORM, UNIFORM,
 				NumberProviders.SCORE, SCORE
 				);
-		private static final Codec<NumberProvider> MAIN = TYPE.dispatch(NumberProvider::getType, NumberProviderTypeCodecs.ALL::get);
+		public static final Codec<NumberProvider> MAIN = TYPE.dispatch(NumberProvider::getType, NumberProviderTypeCodecs.ALL::get);
 	}
 
-	static class NameProviderCodecs {
+	public static class NameProviderCodecs {
 		private static final Codec<LootScoreProviderType> TYPE = Registry.LOOT_SCORE_PROVIDER_TYPE.byNameCodec();
 
 		public static final Codec<FixedScoreboardNameProvider> FIXED = RecordCodecBuilder.create(instance -> instance.group(
@@ -72,6 +72,6 @@ public class ICodecifiedNumberProvidersForYouMojangHopeYoureHappy {
 				ScoreboardNameProviders.CONTEXT, CONTEXT,
 				ScoreboardNameProviders.FIXED, FIXED
 		);
-		private static final Codec<ScoreboardNameProvider> MAIN = TYPE.dispatch(ScoreboardNameProvider::getType, NameProviderCodecs.ALL::get);
+		public static final Codec<ScoreboardNameProvider> MAIN = TYPE.dispatch(ScoreboardNameProvider::getType, NameProviderCodecs.ALL::get);
 	}
 }
