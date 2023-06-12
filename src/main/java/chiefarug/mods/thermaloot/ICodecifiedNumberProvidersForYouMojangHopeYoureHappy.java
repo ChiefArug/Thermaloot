@@ -21,7 +21,7 @@ import net.minecraft.world.level.storage.loot.providers.score.ScoreboardNameProv
 import java.util.Map;
 
 @SuppressWarnings("SpellCheckingInspection")
-// Do i only use this class once? Yes. Was it worth it? Maybe...
+// Do I only use this class once? Yes. Was it worth it? Maybe...
 public class ICodecifiedNumberProvidersForYouMojangHopeYoureHappy {
 
 	public static final Codec<NumberProvider> NUMBER_PROVIDER = Codec.either(
