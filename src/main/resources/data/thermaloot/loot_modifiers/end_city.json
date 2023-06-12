@@ -1,0 +1,9 @@
+{
+  "type": "thermaloot:add_a_capacitor",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/end_city_treasure"
+    }
+  ]
+}

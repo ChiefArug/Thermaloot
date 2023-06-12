@@ -1,7 +1,6 @@
 package chiefarug.mods.thermaloot.loot;
 
 import chiefarug.mods.thermaloot.Thermaloot;
-import chiefarug.mods.thermaloot.loot.ApplyAugmentDataFunction.LuckData;
 import cofh.lib.util.constants.NBTTags;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
@@ -21,7 +20,6 @@ import java.util.Random;
 import static chiefarug.mods.thermaloot.Thermaloot.LGGR;
 import static chiefarug.mods.thermaloot.ThermalootConfig.NEST_ADJECTIVES;
 import static chiefarug.mods.thermaloot.ThermalootConfig.NUMBER_OF_TRANSLATIONS;
-import static chiefarug.mods.thermaloot.loot.ApplyAugmentDataFunction.NORMAL;
 import static chiefarug.mods.thermaloot.loot.NameFunction.NameTier.amazing;
 import static chiefarug.mods.thermaloot.loot.NameFunction.NameTier.terrible;
 import static cofh.core.util.helpers.AugmentDataHelper.hasAugmentData;
@@ -91,6 +89,15 @@ public class NameFunction extends LootItemConditionalFunction {
 		bad(0.25f, 0.5f, true),
 		good(0.5f, 0.75f, true),
 		amazing(0.75f, 1.0f, true),
+		normal(-1, -1) {
+			static final Random r = new Random();
+
+			@Override
+			Component toComponent(int n, Component originalName, @Nullable DebugData dd) {
+				if (r.nextBoolean()) return bad.toComponent(n, originalName, dd);
+				return good.toComponent(n, originalName, dd);
+			}
+		},
 		bugged(-1, -1) {
 			@Override
 			Component toComponent(int n, Component originalName, @Nullable DebugData dd) {
@@ -98,12 +105,6 @@ public class NameFunction extends LootItemConditionalFunction {
 				if (dd != null) dd.logEm();
 				Thread.dumpStack();
 				return super.toComponent(n, originalName, dd);
-			}
-		},
-			normal(-1, -1) {
-			@Override
-			Component toComponent(int n, Component originalName, @Nullable DebugData dd) {
-				return originalName;
 			}
 		};
 
@@ -129,7 +130,7 @@ public class NameFunction extends LootItemConditionalFunction {
 		private static final Style STYLE = Style.EMPTY.withItalic(false);
 
 		private static NameTier getTier(float luckiness) {
-			if ((int) luckiness == NORMAL) return normal;
+			if ((int) luckiness == AddAugmentDataFunction.NORMAL) return normal;
 
 			for (NameTier tier : NameTier.regularValues) {
 				if (luckiness <= tier.max && luckiness >= tier.min)

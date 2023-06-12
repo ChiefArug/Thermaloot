@@ -26,9 +26,10 @@ public class Thermaloot {
     public static final Logger LGGR = LogUtils.getLogger();
     public static final String MODID = "thermaloot";
 
-    public static final DeferredRegister<LootItemFunctionType> LOOT_FUNCTION_REGISTRY = DeferredRegister.create(Registry.LOOT_FUNCTION_REGISTRY, Thermaloot.MODID);
-    public static final RegistryObject<LootItemFunctionType> AUGMENT_AUGIFY = LOOT_FUNCTION_REGISTRY.register("apply_augment_data", () -> new LootItemFunctionType(ApplyAugmentDataFunction.SERIALIZER));
+    public static final DeferredRegister<LootItemFunctionType> LOOT_FUNCTION_REGISTRY = DeferredRegister.create(Registry.LOOT_FUNCTION_REGISTRY, MODID);
+    public static final RegistryObject<LootItemFunctionType> AUGMENT_AUGIFY = LOOT_FUNCTION_REGISTRY.register("apply_augment_data", () -> new LootItemFunctionType(AddAugmentDataFunction.SERIALIZER));
     public static final RegistryObject<LootItemFunctionType> AUGMENT_NAME = LOOT_FUNCTION_REGISTRY.register("name" ,() -> new LootItemFunctionType(NameFunction.SERIALIZER));
+
     public static final DeferredRegister<Item> ITEM_REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final RegistryObject<Item> VARIABLE_CAPACITOR = ITEM_REGISTRY.register("variable_capacitor", () -> new Item(new Item.Properties().tab(ThermalItemGroups.THERMAL_ITEMS)));
 
@@ -39,6 +40,8 @@ public class Thermaloot {
         LOOT_FUNCTION_REGISTRY.register(modBus);
         ITEM_REGISTRY.register(modBus);
         //todo add stuff to loot tables by default by loot modifier
+        //todo add tooltip event for displaying 'toggle' augments like aux null or xp storage. they don't currently
+        //todo figure out what to do with capacitors that don't generate with stats.
     }
 
     /**
