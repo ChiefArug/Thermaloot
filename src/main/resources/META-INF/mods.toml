@@ -10,10 +10,12 @@ displayName="Thermaloot" #mandatory
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 displayURL="https://www.curseforge.com/minecraft/mc-mods/thermaloot" #optional
 logoFile="pack.png" #optional
-credits="Thanks to all the people I have " #optional
+credits="Thanks to all the people who make the Thermal Series of mods, and all those who have provided feedback/suggestions for Thermaloot" #optional
 authors="ChiefArug" #optional
 description='''
-Addon for the Thermal Series that adds Steam dynamos back to modern versions!
+The latest and greatest loot based augment randomisation mod.
+Collect Capacitors from all sorts of loot chests, including end city, ancient city, desert pyramid, buried treasure, mineshafts and more, then use them to power up (or power down) your machines.
+From Sad Capacitors to Huge Sentient Capacitors of Wonder, they are all yours!
 '''
 [[dependencies.thermaloot]] #optional
     modId="forge" #mandatory
