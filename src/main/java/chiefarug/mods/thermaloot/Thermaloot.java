@@ -10,6 +10,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -36,8 +37,9 @@ public class Thermaloot {
     public static final DeferredRegister<Item> ITEM_REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final RegistryObject<Item> VARIABLE_CAPACITOR = ITEM_REGISTRY.register("variable_capacitor", () -> new Item(new Item.Properties().tab(ThermalItemGroups.THERMAL_ITEMS)));
 
-    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIER_SERIALIZER_REGISTRY = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, MODID);
-    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> ADD_A_CAPACITOR_CODEC = LOOT_MODIFIER_SERIALIZER_REGISTRY.register("add_a_capacitor", () -> AddACapacitorModifier.CODEC);
+    public static final DeferredRegister<GlobalLootModifierSerializer> LOOT_MODIFIER_SERIALIZER_REGISTRY = DeferredRegister.create(GlobalLootModifierSerializer.class, MODID);
+
+    public static final RegistryObject<GlobalLootModifierSerializer<?>> ADD_A_CAPACITOR_CODEC = LOOT_MODIFIER_SERIALIZER_REGISTRY.register("add_a_capacitor", () -> AddACapacitorModifier.serializer());
 
     public Thermaloot() {
         ICodecifiedNumberProvidersForYouMojangHopeYoureHappy.loadEarlyPls();

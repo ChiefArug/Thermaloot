@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
@@ -124,7 +125,7 @@ public class NameFunction extends LootItemConditionalFunction {
 		}
 
 		Component toComponent(int n, Component originalName, @Nullable DebugData dd) {
-			return net.minecraft.network.chat.Component.translatable("attribute.thermaloot." + name() + (supportsMultiple ? "." + n : ""), originalName).withStyle(STYLE);
+			return new TranslatableComponent("attribute.thermaloot." + name() + (supportsMultiple ? "." + n : ""), originalName).withStyle(STYLE);
 		}
 
 		private static final Style STYLE = Style.EMPTY.withItalic(false);

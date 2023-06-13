@@ -25,12 +25,7 @@ From Sad Capacitors to Huge Sentient Capacitors of Wonder, they are all yours!
     modId="minecraft"
     mandatory=true
     versionRange="${minecraft_range}"
-[[dependencies.thermaloot]] #optional
-    modId="thermal" #mandatory
-    mandatory=true #mandatory
-    versionRange="${thermal_core_range}" #mandatory
-    ordering="AFTER"
 [[dependencies.thermaloot]]
     modId="thermal_expansion"
     mandatory=true
-    versionRange="[10,)"
+    versionRange="${thermal_expansion_range}"
