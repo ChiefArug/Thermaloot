@@ -7,7 +7,6 @@ Adds randomly generated and procedurally named capacitors to all sorts of loot c
 
 By default capacitors are added to these structure chests:
 
- - Ancient City
  - Buried Treasure
  - Desert Temple
  - Dungeon
