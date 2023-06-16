@@ -27,9 +27,9 @@ public class ThermalootConfig {
 				.comment("How lucky/unlucky something needs to be to get a name from that tier.");
 		TERRIBLE_BAD = builder.comment("The amount of luck to go from a terrible name to a bad name")
 				.defineInRange("terrible_bad", 0.25, 0, 1);
-		BAD_GOOD = builder.comment("The amount of luck to go from a terrible name to a bad name")
+		BAD_GOOD = builder.comment("The amount of luck to go from a bad name to a good name")
 				.defineInRange("bad_good", 0.5, 0, 1);
-		GOOD_AMAZING = builder.comment("The amount of luck to go from a terrible name to a bad name")
+		GOOD_AMAZING = builder.comment("The amount of luck to go from a good name to an amazing name")
 				.defineInRange("good_amazing", 0.75, 0, 1);
 		builder.pop();
 
