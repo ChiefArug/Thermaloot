@@ -1,6 +1,7 @@
 package chiefarug.mods.thermaloot.loot;
 
 import chiefarug.mods.thermaloot.Thermaloot;
+import chiefarug.mods.thermaloot.ThermalootConfig;
 import cofh.lib.util.constants.NBTTags;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
@@ -16,10 +17,14 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
 import static chiefarug.mods.thermaloot.Thermaloot.LGGR;
+import static chiefarug.mods.thermaloot.ThermalootConfig.BAD_GOOD;
+import static chiefarug.mods.thermaloot.ThermalootConfig.GOOD_AMAZING;
 import static chiefarug.mods.thermaloot.ThermalootConfig.NEST_ADJECTIVES;
 import static chiefarug.mods.thermaloot.ThermalootConfig.NUMBER_OF_TRANSLATIONS;
+import static chiefarug.mods.thermaloot.ThermalootConfig.TERRIBLE_BAD;
 import static chiefarug.mods.thermaloot.loot.NameFunction.NameTier.amazing;
 import static chiefarug.mods.thermaloot.loot.NameFunction.NameTier.terrible;
 import static cofh.core.util.helpers.AugmentDataHelper.hasAugmentData;
@@ -43,12 +48,13 @@ public class NameFunction extends LootItemConditionalFunction {
 
 		float finalLuck = luck.getFinalLuck();
 		NameTier tier = NameTier.getTier(finalLuck);
-		name = getModifiedName(tier, finalLuck, name, new DebugData(luck,nbt.getCompound(NBTTags.TAG_AUGMENT_DATA)));
+		DebugData dd = new DebugData(luck, nbt.getCompound(NBTTags.TAG_AUGMENT_DATA));
+		name = getModifiedName(tier, finalLuck, name, dd);
 
 		if (NEST_ADJECTIVES.get()) {
 			// if one stat is particularly lucky/unlucky then add that on as well. This means that you could end up with a rather long name, like Perfect Stinky Capacitor of Uselessness if you have a good roll, a bad roll and a medioka average.
-			if (luck.maxLuck > 0.98) name = getModifiedName(amazing, luck.maxLuck + 1, name, null);
-			if (luck.minLuck < 0.02) name = getModifiedName(terrible, luck.minLuck + 1, name, null);
+			if (luck.maxLuck > ThermalootConfig.EXTRA_LUCKY.get()) name = getModifiedName(amazing, luck.maxLuck + 1, name, dd);
+			if (luck.minLuck < ThermalootConfig.EXTRA_UNLUCKY.get()) name = getModifiedName(terrible, luck.minLuck + 1, name, dd);
 		}
 
 		if (originalName != name)
@@ -85,11 +91,11 @@ public class NameFunction extends LootItemConditionalFunction {
 	}
 	enum NameTier {
 
-		terrible(0f, 0.25f, true),
-		bad(0.25f, 0.5f, true),
-		good(0.5f, 0.75f, true),
-		amazing(0.75f, 1.0f, true),
-		normal(-1, -1) { // only used when it generates with only set stat modifiers, ie dynamo throttle, auxiliary cactus
+		terrible(() -> 0d, TERRIBLE_BAD, true),
+		bad(TERRIBLE_BAD, BAD_GOOD, true),
+		good(BAD_GOOD, GOOD_AMAZING, true),
+		amazing(GOOD_AMAZING, () -> 1d, true),
+		normal() { // only used when it generates with only set stat modifiers, ie dynamo throttle, auxiliary cactus
 			static final Random r = new Random();
 
 			@Override
@@ -98,7 +104,7 @@ public class NameFunction extends LootItemConditionalFunction {
 				return good.toComponent(n, originalName, dd);
 			}
 		},
-		bugged(-1, -1) {
+		bugged() {
 			@Override
 			Component toComponent(int n, Component originalName, @Nullable DebugData dd) {
 				LGGR.error("Something bugged generated for Thermaloot! Initializing emergency procedures");
@@ -109,15 +115,19 @@ public class NameFunction extends LootItemConditionalFunction {
 		};
 
 		public static final NameTier[] regularValues = {terrible, bad, good, amazing};
-		private final float min;
-		private final float max;
+		private final Supplier<Double> min;
+		private final Supplier<Double> max;
 		private final boolean supportsMultiple;
 
-		NameTier(float min, float max) {
+		NameTier() {
+			this(() -> -1d, () -> -1d);
+		}
+
+		NameTier(Supplier<Double> min, Supplier<Double> max) {
 			this(min, max, false);
 		}
 
-		NameTier(float min, float max, boolean supportsMultiple) {
+		NameTier(Supplier<Double> min, Supplier<Double> max, boolean supportsMultiple) {
 			this.min = min;
 			this.max = max;
 			this.supportsMultiple = supportsMultiple;
@@ -133,11 +143,18 @@ public class NameFunction extends LootItemConditionalFunction {
 			if ((int) luckiness == AddAugmentDataFunction.NORMAL) return normal;
 
 			for (NameTier tier : NameTier.regularValues) {
-				if (luckiness <= tier.max && luckiness >= tier.min)
+				if (luckiness <= tier.getMax() && luckiness >= tier.getMin())
 					return tier;
 			}
 			return bugged;
 		}
 
+		public double getMin() {
+			return min.get();
+		}
+
+		public double getMax() {
+			return max.get();
+		}
 	}
 }
