@@ -1,9 +1,9 @@
 {
   "type": "thermaloot:add_a_capacitor",
   "count": {
-    "type": "uniform",
-    "min": 0,
-    "max": 2
+    "type": "binomial",
+    "p": 0.1,
+    "n": 1
   },
   "conditions": [{
       "condition": "forge:loot_table_id",
