@@ -3,7 +3,7 @@
   "count": {
     "type": "binomial",
     "p": 0.5,
-    "n": 5
+    "n": 2
   },
   "conditions": [{
       "condition": "forge:loot_table_id",

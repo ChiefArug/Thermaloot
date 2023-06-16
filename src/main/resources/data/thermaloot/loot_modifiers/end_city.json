@@ -2,7 +2,11 @@
   "type": "thermaloot:add_a_capacitor",
   "count": {
     "type": "binomial",
-    "p": 0.4,
+    "p": {
+      "type": "uniform",
+      "min": 0.1,
+      "max": 0.8
+    },
     "n": 5
   },
   "conditions": [{
