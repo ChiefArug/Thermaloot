@@ -50,7 +50,7 @@ public class Thermaloot {
         LOOT_MODIFIER_SERIALIZER_REGISTRY.register(modBus);
         //todo figure out what to do with capacitors that don't generate with stats.
         //todo add config option to hide stats until 'assessed'. maybe integrate the 'assessor' with whatever is gonna happen with stat-less caps?
-        //todo figure out if i want to have a whole assessing system, or if that is too complicated
+        //todo figure out if i want to have a whole assessing system, or if that is too complicatedD
     }
 
     /**
