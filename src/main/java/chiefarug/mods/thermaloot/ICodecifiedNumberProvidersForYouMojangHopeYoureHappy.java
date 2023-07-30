@@ -32,13 +32,14 @@ public class ICodecifiedNumberProvidersForYouMojangHopeYoureHappy {
 	public static final Codec<NumberProvider> NUMBER_PROVIDER = Codec.either(
             Codec.FLOAT.xmap(ConstantValue::exactly, (ConstantValue cv) -> cv.value),
             NumberProviderTypeCodecs.MAIN
-    // get the right, else get the left (it should never throw). Always serialize to the right, as that is just NumberProvider
+    // Get the right, else get the left (it should never throw).
+	// Always serialise to the right, as that is just NumberProvider
     ).xmap(ICodecifiedNumberProvidersForYouMojangHopeYoureHappy::unwrapDoubleSidedEither, Either::right);
 
 	public static class NumberProviderTypeCodecs {
 		public static final Codec<LootNumberProviderType> TYPE = Registry.LOOT_NUMBER_PROVIDER_TYPE.byNameCodec();
 
-		// These are all suppliers because some of them reference the main NP codec, which is still being initialized when these are being initialized, so results in a NPE
+		// These are all suppliers because some of them reference the main NP codec, which is still being initialised when these are being initialised, so results in a NPE
 		public static final Supplier<Codec<ConstantValue>> CONSTANT = Suppliers.memoize(() -> RecordCodecBuilder.create(instance -> instance.group(
 				Codec.FLOAT.fieldOf("value").forGetter((ConstantValue cv) -> cv.getFloat(null))
 		).apply(instance, ConstantValue::exactly)));
