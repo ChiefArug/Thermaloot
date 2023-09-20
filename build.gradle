@@ -80,7 +80,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven { // JEI
-        url 'https://dvs1.progwml6.com/files/maven/'
+        url 'https://modmaven.dev'
         content {
             includeGroup 'mezz.jei'
         }
