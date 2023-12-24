@@ -4,7 +4,7 @@ import com.google.common.base.Suppliers;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.providers.number.BinomialDistributionGenerator;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -37,7 +37,7 @@ public class ICodecifiedNumberProvidersForYouMojangHopeYoureHappy {
     ).xmap(ICodecifiedNumberProvidersForYouMojangHopeYoureHappy::unwrapDoubleSidedEither, Either::right);
 
 	public static class NumberProviderTypeCodecs {
-		public static final Codec<LootNumberProviderType> TYPE = Registry.LOOT_NUMBER_PROVIDER_TYPE.byNameCodec();
+		public static final Codec<LootNumberProviderType> TYPE = BuiltInRegistries.LOOT_NUMBER_PROVIDER_TYPE.byNameCodec();
 
 		// These are all suppliers because some of them reference the main NP codec, which is still being initialised when these are being initialised, so results in a NPE
 		public static final Supplier<Codec<ConstantValue>> CONSTANT = Suppliers.memoize(() -> RecordCodecBuilder.create(instance -> instance.group(
@@ -77,7 +77,7 @@ public class ICodecifiedNumberProvidersForYouMojangHopeYoureHappy {
 	}
 
 	public static class NameProviderCodecs {
-		private static final Codec<LootScoreProviderType> TYPE = Registry.LOOT_SCORE_PROVIDER_TYPE.byNameCodec();
+		private static final Codec<LootScoreProviderType> TYPE = BuiltInRegistries.LOOT_SCORE_PROVIDER_TYPE.byNameCodec();
 
 		public static final Codec<FixedScoreboardNameProvider> FIXED = RecordCodecBuilder.create(instance -> instance.group(
 				Codec.STRING.fieldOf("name").forGetter(FixedScoreboardNameProvider::getName)

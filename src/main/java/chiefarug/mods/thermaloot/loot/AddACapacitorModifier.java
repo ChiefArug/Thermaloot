@@ -7,6 +7,9 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootDataId;
+import net.minecraft.world.level.storage.loot.LootDataType;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
@@ -19,7 +22,7 @@ import static chiefarug.mods.thermaloot.Thermaloot.MODID;
 public class AddACapacitorModifier extends LootModifier {
 
     private static final NumberProvider SINGLE_COUNT = ConstantValue.exactly(1);
-    public static final ResourceLocation SINGLE_CAPACITOR = new ResourceLocation(MODID, "single_capacitor");
+    public static final LootDataId<LootTable> SINGLE_CAPACITOR = new LootDataId<>(LootDataType.TABLE, new ResourceLocation(MODID, "single_capacitor"));
 
 
     public static final Codec<AddACapacitorModifier> CODEC = RecordCodecBuilder.create(
@@ -41,7 +44,7 @@ public class AddACapacitorModifier extends LootModifier {
     @NotNull
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        if (noRecurse || context.getQueriedLootTableId().equals(SINGLE_CAPACITOR)) return generatedLoot;
+        if (noRecurse || context.getQueriedLootTableId().equals(SINGLE_CAPACITOR.location())) return generatedLoot;
          
         int repeats = countProvider.getInt(context);
 //        List<ItemStack> stackedStacks = generatedLoot.stream().collect(Collectors.groupingBy(ItemStack::getItem)).values().stream().map(itemStacks -> {
@@ -51,8 +54,11 @@ public class AddACapacitorModifier extends LootModifier {
 //        }).sorted(Comparator.comparingInt(ItemStack::getCount)).toList();
 
         noRecurse = true;
-        while (repeats-- >= 1)
-            generatedLoot.addAll(context.getLevel().getServer().getLootTables().get(SINGLE_CAPACITOR).getRandomItems(context));
+        LootTable table = context.getLevel().getServer().getLootData().getElement(SINGLE_CAPACITOR);
+        if (table == null) throw new IllegalStateException("Missing required loot table "+ SINGLE_CAPACITOR.location() +" for generating Thermaloot capacitors!");
+        while (repeats-- >= 1) {
+            table.getRandomItems(context, generatedLoot::add);
+        }
 //            if (context.getRandom().nextFloat() < replaceChance) {
 //                stackedStacks.
 //            } else

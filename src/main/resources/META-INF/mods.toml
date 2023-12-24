@@ -1,5 +1,5 @@
 modLoader="javafml" #mandatory
-loaderVersion="${forge_range}" #mandatory
+loaderVersion="${neoforge_range}" #mandatory
 license="MIT"
 issueTrackerURL="https://github.com/ChiefArug/Thermalthermaloot/issues" #optional
 [[mods]] #mandatory
@@ -20,7 +20,7 @@ From Sad Capacitors to Huge Sentient Capacitors of Wonder, they are all yours!
 [[dependencies.thermaloot]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="${forge_range}" #mandatory
+    versionRange="${neoforge_range}" #mandatory
 [[dependencies.thermaloot]]
     modId="minecraft"
     mandatory=true
@@ -33,4 +33,4 @@ From Sad Capacitors to Huge Sentient Capacitors of Wonder, they are all yours!
 [[dependencies.thermaloot]]
     modId="thermal_expansion"
     mandatory=true
-    versionRange="[10,)"
+    versionRange="[11,)"

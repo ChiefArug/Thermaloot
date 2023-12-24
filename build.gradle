@@ -1,7 +1,7 @@
 plugins {
     id 'eclipse'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'net.neoforged.gradle' version '[6.0.18,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
     id 'org.spongepowered.mixin' version '0.7.+'
 }
@@ -14,7 +14,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
-    mappings channel: 'parchment', version: '2022.09.18-1.19.2'
+    mappings channel: 'parchment', version: "${parchment_version}-${minecraft_version}"
     accessTransformer = file 'src/main/resources/META-INF/accesstransformer.cfg'
     runs {
         client {
@@ -26,11 +26,6 @@ minecraft {
             // enable using JBR to hotswap MOAR
             // also ignore the option if someone isnt using JBR
             jvmArgs '-XX:+AllowEnhancedClassRedefinition', '-XX:+IgnoreUnrecognizedVMOptions'
-            mods {
-                thermaloot {
-                    source sourceSets.main
-                }
-            }
         }
 
         server {
@@ -38,11 +33,6 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             property 'forge.enabledGameTestNamespaces', 'thermaloot'
-            mods {
-                thermaloot {
-                    source sourceSets.main
-                }
-            }
         }
 
         // This run config launches GameTestServer and runs all registered gametests, then exits.
@@ -53,11 +43,6 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             property 'forge.enabledGameTestNamespaces', 'thermaloot'
-            mods {
-                thermaloot {
-                    source sourceSets.main
-                }
-            }
         }
 
         data {
@@ -66,11 +51,6 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             args '--mod', 'thermaloot', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-            mods {
-                thermaloot {
-                    source sourceSets.main
-                }
-            }
         }
     }
 }
@@ -110,7 +90,7 @@ dependencies {
     // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft', it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    minecraft "net.neoforged:forge:${minecraft_version}-${neoforge_version}"
 
     // compile against the JEI API but do not include it at runtime
     compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"))
@@ -123,9 +103,6 @@ dependencies {
     implementation fg.deobf("com.teamcofh:thermal_foundation:${minecraft_version}-${thermal_foundation_version}")
     implementation fg.deobf("com.teamcofh:thermal_expansion:${minecraft_version}-${thermal_expansion_version}")
 
-
-    // run game with a few extra mods for testing
-    runtimeOnly fg.deobf("com.teamcofh:thermal_dynamics:${minecraft_version}-${thermal_dynamics_version}")
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
@@ -148,7 +125,7 @@ def modsTomlSpec = copySpec {
         include 'META-INF/mods.toml'
         expand 'thermaloot_version': thermaloot_version,
             'minecraft_range': minecraft_range,
-            'forge_range': forge_range,
+            'neoforge_range': neoforge_range,
             'thermal_core_range': thermal_core_range
     }
 }

@@ -2,7 +2,7 @@ package chiefarug.mods.thermaloot.loot;
 
 import chiefarug.mods.thermaloot.Thermaloot;
 import cofh.core.util.helpers.AugmentDataHelper;
-import cofh.thermal.lib.item.AugmentItem;
+import cofh.thermal.lib.common.item.AugmentItem;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;

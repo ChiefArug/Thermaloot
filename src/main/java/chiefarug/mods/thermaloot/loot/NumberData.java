@@ -1,6 +1,6 @@
 package chiefarug.mods.thermaloot.loot;
 
-import cofh.thermal.lib.common.ThermalAugmentRules;
+import cofh.thermal.lib.util.ThermalAugmentRules;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.providers.number.BinomialDistributionGenerator;
 import net.minecraft.world.level.storage.loot.providers.number.LootNumberProviderType;

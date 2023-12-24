@@ -3,10 +3,9 @@ package chiefarug.mods.thermaloot;
 import chiefarug.mods.thermaloot.loot.AddACapacitorModifier;
 import chiefarug.mods.thermaloot.loot.AddAugmentDataFunction;
 import chiefarug.mods.thermaloot.loot.NameFunction;
-import cofh.thermal.lib.common.ThermalItemGroups;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
@@ -29,12 +28,12 @@ public class Thermaloot {
     public static final Logger LGGR = LogUtils.getLogger();
     public static final String MODID = "thermaloot";
 
-    public static final DeferredRegister<LootItemFunctionType> LOOT_FUNCTION_REGISTRY = DeferredRegister.create(Registry.LOOT_FUNCTION_REGISTRY, MODID);
+    public static final DeferredRegister<LootItemFunctionType> LOOT_FUNCTION_REGISTRY = DeferredRegister.create(BuiltInRegistries.LOOT_FUNCTION_TYPE.key(), MODID);
     public static final RegistryObject<LootItemFunctionType> AUGMENT_AUGIFY = LOOT_FUNCTION_REGISTRY.register("apply_augment_data", () -> new LootItemFunctionType(AddAugmentDataFunction.SERIALIZER));
     public static final RegistryObject<LootItemFunctionType> AUGMENT_NAME = LOOT_FUNCTION_REGISTRY.register("name" ,() -> new LootItemFunctionType(NameFunction.SERIALIZER));
 
     public static final DeferredRegister<Item> ITEM_REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-    public static final RegistryObject<Item> VARIABLE_CAPACITOR = ITEM_REGISTRY.register("variable_capacitor", () -> new Item(new Item.Properties().tab(ThermalItemGroups.THERMAL_ITEMS)));
+    public static final RegistryObject<Item> VARIABLE_CAPACITOR = ITEM_REGISTRY.register("variable_capacitor", () -> new Item(new Item.Properties()));
 
     public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIER_SERIALIZER_REGISTRY = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, MODID);
     public static final RegistryObject<Codec<? extends IGlobalLootModifier>> ADD_A_CAPACITOR_CODEC = LOOT_MODIFIER_SERIALIZER_REGISTRY.register("add_a_capacitor", () -> AddACapacitorModifier.CODEC);
